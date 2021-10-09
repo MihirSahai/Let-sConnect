@@ -1,29 +1,45 @@
-const express = require('express')
-const app = express()
-const server = require('http').Server(app)
-const io = require('socket.io')(server)
-const { v4: uuidV4 } = require('uuid')
+const express = require("express");
+const app = express();
+const server = require("http").Server(app);
+const io = require("socket.io")(server);
+const { v4: uuidV4 } = require("uuid");
 
-app.set('view engine', 'ejs')
-app.use(express.static('public'))
+const port = process.env.PORT || 3000;
 
-app.get('/', (req, res) => {
-  res.redirect(`/${uuidV4()}`)
-})
+app.set("view engine", "ejs");
+app.use(express.static("public"));
 
-app.get('/:room', (req, res) => {
-  res.render('room', { roomId: req.params.room })
-})
+// app.get("/vid", (req, res) => {
+//     res.redirect(`/vid/${uuidV4()}`);
+// });
 
-io.on('connection', socket => {
-  socket.on('join-room', (roomId, userId) => {
-    socket.join(roomId)
-    socket.to(roomId).broadcast.emit('user-connected', userId)
+// app.get("/vid/:room", (req, res) => {
+//     res.render("room", { roomId: req.params.room });
+// });
 
-    socket.on('disconnect', () => {
-      socket.to(roomId).broadcast.emit('user-disconnected', userId)
-    })
-  })
-})
+io.on("connection", (socket) => {
+    socket.on("join-room", (roomId, userId) => {
+        socket.join(roomId);
+        socket.to(roomId).broadcast.emit("user-connected", userId);
 
-server.listen(3000)
+        socket.on("disconnect", () => {
+            socket.to(roomId).broadcast.emit("user-disconnected", userId);
+        });
+    });
+});
+
+server.listen(port, function () {
+    console.log("server is running on port " + port);
+});
+
+app.get("/", function (req, res) {
+    res.render("index");
+});
+
+app.get("/login", function (req, res) {
+    res.render("login");
+});
+
+app.get("/signup", function (req, res) {
+    res.render("signup");
+});
