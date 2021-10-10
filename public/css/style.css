@@ -18,7 +18,7 @@
 .front {
     height: 100%;
     width: 100%;
-    background-image: url(/images/front_background.jpg);
+    background-image: url(/images/front_background.svg);
 }
 .back {
     height: 100%;
@@ -150,7 +150,7 @@ a:hover {
 
 .frontText {
     position: relative;
-    top:80%;
+    top:85%;
     left: 0;
     right: 0;
     /* padding-top: 30%; */
@@ -159,8 +159,16 @@ a:hover {
     width: 100%;
 	text-align: center;
 
-	font-size: 2.5rem;
-	font-family: 'Dosis', sans-serif;
+	font-size: 3.4rem;
+    color: #ccc;
+	font-family: Poppins-Bold;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:wght@500&display=swap');
+
+.mText{
+    font-size: 2.1rem;
+    color:rgb(65, 64, 64);
 }
 
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,500,300,700);
